@@ -57,12 +57,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           $_SESSION['session_id'] = $session_id;
           $_SESSION['last_activity'] = time();
 
-          // Redirect to home.php or privilege.php if the username is "admin"
-          if ($username === 'admin') {
-            header("Location: privilege.php");
-          } else {
-            header("Location: menuGP.php");
-          }
           exit();
         } else {
           // Wrong password, display error message
@@ -82,8 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <head>
   <title>User Authentication</title>
-  <link rel="stylesheet" href="../CSS_JS/loginGP.css" />
-  <script src="../CSS_JS/loginGP.js" charset="utf-8"></script>
+  <link rel="stylesheet" href="../app/login.css" />
 </head>
 
 <body>
@@ -100,10 +93,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       value="<?php echo htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8'); ?>">
 
     <input type="submit" value="LOG IN" />
-
-    <div class="signup_link">
-      Don't have an account? <a href="registerGP.php">Sign Up</a>
-    </div>
   </form>
 
   <script>

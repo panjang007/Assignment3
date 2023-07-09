@@ -1,3 +1,22 @@
+<?php
+require_once('../app/config.php');
+session_start();
+
+// Generate CSRF token if it doesn't exist
+if (!isset($_SESSION['csrf_token'])) {
+  $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
+// Validate CSRF token
+if ($_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+    // Show error message and redirect to login page
+    echo '<script>alert("Error: Invalid CSRF token."); window.location.href = "login.php";</script>';
+    exit();
+}
+else {
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,8 +41,8 @@
 
   <section id="home" class="section">
     <h1>Welcome to My Portfolio</h1>
-    <p>Hi, I'm John Doe, a web developer.</p>
-    <img src="your-image.jpg" alt="Your Name">
+    <p>Hi, I'm Abu Zharr Luqman, a web developer.</p>
+    <img src="../asset/gambar_abu.jpg" alt="Abu Zharr Luqman">
   </section>
 
   <section id="about" class="section">
@@ -51,7 +70,7 @@
 
   <section id="contact" class="section">
     <h2>Contact Me</h2>
-    <form id="contact-form">
+    <form id="contact-form" action="contact_me.php" method="POST">
       <label for="name">Name:</label>
       <input type="text" id="name" name="name" required>
       <label for="email">Email:</label>
@@ -61,8 +80,10 @@
       <button type="submit">Send</button>
     </form>
   </section>
-
-  <script src="script.js"></script>
 </body>
 
 </html>
+
+//CSP: 
+//Header always set X-Frame-Options "SAMEORIGIN"
+//Header always set Content-Security-Policy "default-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; media-src 'self'"
