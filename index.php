@@ -13,8 +13,6 @@ if ($_POST['csrf_token'] !== $_SESSION['csrf_token']) {
     echo '<script>alert("Error: Invalid CSRF token."); window.location.href = "login.php";</script>';
     exit();
 }
-else {
-}
 ?>
 
 <!DOCTYPE html>
@@ -70,7 +68,7 @@ else {
 
   <section id="contact" class="section">
     <h2>Contact Me</h2>
-    <form id="contact-form" action="contact_me.php" method="POST">
+    <form id="contact-form" action="contact_me.php" method="POST" onsubmit="return validateForm()">
       <label for="name">Name:</label>
       <input type="text" id="name" name="name" required>
       <label for="email">Email:</label>
@@ -79,10 +77,45 @@ else {
       <textarea id="message" name="message" required></textarea>
       <button type="submit">Send</button>
 
-        <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8'); ?>">
+      <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8'); ?>">
 
     </form>
   </section>
+
+  <script>
+    function validateForm() {
+      var name = document.getElementById('name').value;
+      var email = document.getElementById('email').value;
+      var message = document.getElementById('message').value;
+
+      // Name validation
+      if (name.trim() === '') {
+        alert('Please enter your name.');
+        return false;
+      }
+
+      // Email validation
+      if (email.trim() === '') {
+        alert('Please enter your email.');
+        return false;
+      }
+
+      // Email format validation using a regular expression
+      var emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+      if (!emailRegex.test(email)) {
+        alert('Please enter a valid email address.');
+        return false;
+      }
+
+      // Message validation
+      if (message.trim() === '') {
+        alert('Please enter a message.');
+        return false;
+      }
+
+      return true;
+    }
+  </script>
 </body>
 
 </html>
@@ -90,3 +123,5 @@ else {
 //CSP: 
 //Header always set X-Frame-Options "SAMEORIGIN"
 //Header always set Content-Security-Policy "default-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; media-src 'self'"
+
+
