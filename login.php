@@ -89,8 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <label for="password">Password:</label>
     <input type="password" id="password" name="password" required><br><br>
 
-    <input type="hidden" name="csrf_token"
-      value="<?php echo htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8'); ?>">
+    <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8'); ?>">
 
     <input type="submit" value="LOG IN" />
   </form>

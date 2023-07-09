@@ -78,6 +78,9 @@ else {
       <label for="message">Message:</label>
       <textarea id="message" name="message" required></textarea>
       <button type="submit">Send</button>
+
+        <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8'); ?>">
+
     </form>
   </section>
 </body>
